@@ -4,9 +4,9 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@/Components/ui/dialog";
 import { Input } from "@/Components/ui/input";
@@ -17,11 +17,13 @@ function Message() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setSuccess(false);
+    setError(false);
 
     try {
       const res = await fetch("/.netlify/functions/discord", {
@@ -39,8 +41,8 @@ function Message() {
       setSuccess(true);
       setName("");
       setMessage("");
-    } catch (err) {
-      alert("Gagal mengirim pesan.");
+    } catch {
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -56,7 +58,7 @@ function Message() {
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogDescription>Leave your message here!</DialogDescription>
+            <DialogTitle>Leave your message here!</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4">
             <div className="grid gap-3">
@@ -82,6 +84,9 @@ function Message() {
             </div>
             {success && (
               <p className="text-green-600 text-sm">Pesan berhasil dikirim!</p>
+            )}
+            {error && (
+              <p className="text-red-600 text-sm">Gagal mengirim pesan. Coba lagi.</p>
             )}
           </div>
           <DialogFooter>

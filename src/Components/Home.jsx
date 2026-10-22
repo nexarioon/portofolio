@@ -19,8 +19,8 @@ const Home = () => {
 
   const handleDownloadCV = () => {
     const link = document.createElement("a");
-    link.href = "../images/fendisCV.jpg";
-    link.download = "CV_FendiPermadi";
+    link.href = "../images/fendisCV.pdf";
+    link.download = "CV_FendiPermadi.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -35,34 +35,34 @@ const Home = () => {
   return (
     <div
       id="home"
-      className="flex flex-col w-3/4 mx-auto items-center py-30 justify min-h-screen gap-3 md:flex md:flex-row md:mx-auto md:px-4 lg:mx-auto lg:px-4"
+      className="flex flex-col w-3/4 mx-auto items-center py-16 md:py-20 min-h-[85vh] md:min-h-screen gap-3 md:flex md:flex-row md:mx-auto md:px-4 lg:mx-auto lg:px-4"
     >
       <div className="mx-auto text-center md:text-left md:w-3/4 lg:w-4xl px-8 ">
-        <h1 className="text-sm md:text-base text-gray-400">FENDI PERMADI</h1>
-        <div
-          className="relative overflow-hidden"
-          style={{ minHeight: "1.2em" }}
-        >
-          <AnimatePresence mode="wait">
-            <motion.h1
-              key={roles[roleIndex]}
-              initial={{ y: 40, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -40, opacity: 0 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-semibold"
-            >
-              {roles[roleIndex]}
-            </motion.h1>
-          </AnimatePresence>
-        </div>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-semibold">
-          Developer
+        <p className="text-sm md:text-base text-gray-500">FENDI PERMADI</p>
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold">
+          <span
+            className="relative overflow-hidden block"
+            style={{ minHeight: "1.2em" }}
+          >
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={roles[roleIndex]}
+                initial={{ y: 40, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -40, opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="absolute inset-x-0 top-0 block"
+              >
+                {roles[roleIndex]}
+              </motion.span>
+            </AnimatePresence>
+          </span>
+          <span className="block">Developer</span>
         </h1>
-        <h1 className="mt-5 text-sm md:text-base text-gray-400">
+        <p className="mt-5 text-sm md:text-base text-gray-500">
           Undergraduate Information System Student at UPN "Veteran" Jakarta
-        </h1>
-        <div className="">
+        </p>
+        <div id="contact" className="">
           <Contact />
         </div>
         <div className="inline-flex items-center justify-center bg-gray-200 text-gray-600 font-semibold h-12 px-6 py-2 w-auto rounded-lg hover:bg-gray-300 transform hover:scale-105">

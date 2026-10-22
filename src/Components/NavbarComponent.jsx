@@ -15,6 +15,7 @@ export function NavbarComponent() {
         { name: "Home", link: "#home" },
         { name: "About", link: "#about" },
         { name: "Porto", link: "#porto" },
+        { name: "Contact", link: "#contact" },
     ];
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

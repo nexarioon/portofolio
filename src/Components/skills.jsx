@@ -21,7 +21,7 @@ export default function SkillsSection() {
   const [activeTab, setActiveTab] = useState("skills");
 
   return (
-    <div id="porto" className="mx-auto sm:w-full md:w-3/4 lg:w-4xl px-4 mt-10">
+    <div id="skills" className="mx-auto sm:w-full md:w-3/4 lg:w-4xl px-4 mt-10">
       <div className="flex justify-left space-x-2 mb-0">
         <button
           className={`px-4 py-2 rounded-md ${activeTab === "skills" ? "bg-gray-100" : "bg-white"}`}

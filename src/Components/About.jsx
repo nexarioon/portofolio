@@ -5,7 +5,7 @@ const About = () => {
     return (
         <div>
             <div id="about" className="mx-auto sm:w-full md:w-3/4 lg:w-4xl px-4">
-                <h1 className="text-3xl sm:text-4xl md:text-4xl text-left pb-5">About Me</h1>
+                <h2 className="text-3xl sm:text-4xl md:text-4xl text-left pb-5">About Me</h2>
                 <p className="text-justify sm:text-justify md:text-justify">
                     I am currently pursuing a Bachelor's degree in Information Systems at UPN "Veteran" Jakarta,
                     where I am building a strong foundation in both frontend web development and enterprise systems.
