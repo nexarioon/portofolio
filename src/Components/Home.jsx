@@ -1,100 +1,94 @@
-import React, { useState, useEffect } from "react";
-import { GlareCard } from "./ui/glare-card";
+import React from "react";
+import { IconArrowRight, IconDownload } from "@tabler/icons-react";
 import Contact from "./Contact";
 import Message from "./message";
-import { motion, AnimatePresence } from "framer-motion";
 
-const roles = ["Front End", "Backend", "Fullstack"];
+const Home = () => (
+  <section
+    id="home"
+    className="mx-auto grid min-h-[calc(100dvh-48px)] w-full max-w-[1312px] items-center gap-16 bg-[var(--page-bg)] px-4 pb-16 pt-12 text-[var(--text-primary)] md:grid-cols-[1fr_0.9fr] md:gap-16 md:px-8 md:pt-8 lg:px-16"
+  >
+    {/* Text column */}
+    <div className="order-2 text-center md:order-1 md:text-left">
+      {/* Eyebrow */}
+      <p
+        className="mb-4 text-sm text-[var(--text-secondary)]"
+        style={{ fontFamily: "var(--ibm-font)" }}
+      >
+        Fendi Permadi &mdash; Jakarta, Indonesia
+      </p>
 
-const Home = () => {
-  const [showDownloadNotification, setDownloadNotification] = useState(false);
-  const [roleIndex, setRoleIndex] = useState(0);
+      {/* Headline */}
+      <h1
+        className="text-[2.25rem] font-semibold leading-[1.2] text-[var(--text-primary)] sm:text-[2.75rem] lg:text-[3.4375rem]"
+        style={{ fontFamily: "var(--ibm-font)" }}
+      >
+        Building useful things{" "}
+        <span style={{ color: "var(--ibm-text-accent)" }}>for the web.</span>
+      </h1>
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % roles.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+      {/* Sub-heading */}
+      <p
+        className="mt-4 text-base leading-relaxed text-[var(--text-secondary)] md:max-w-lg"
+        style={{ fontFamily: "var(--ibm-font)" }}
+      >
+        Information Systems student &amp; web developer. Focused on clear,
+        responsive experiences that help people get things done.
+      </p>
 
-  const handleDownloadCV = () => {
-    const link = document.createElement("a");
-    link.href = "../images/fendisCV.pdf";
-    link.download = "CV_FendiPermadi.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-
-    setDownloadNotification(true);
-
-    setTimeout(() => {
-      setDownloadNotification(false);
-    }, 3000);
-  };
-
-  return (
-    <div
-      id="home"
-      className="flex flex-col w-3/4 mx-auto items-center py-16 md:py-20 min-h-[85vh] md:min-h-screen gap-3 md:flex md:flex-row md:mx-auto md:px-4 lg:mx-auto lg:px-4"
-    >
-      <div className="mx-auto text-center md:text-left md:w-3/4 lg:w-4xl px-8 ">
-        <p className="text-sm md:text-base text-gray-500">FENDI PERMADI</p>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold">
-          <span
-            className="relative overflow-hidden block"
-            style={{ minHeight: "1.2em" }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={roles[roleIndex]}
-                initial={{ y: 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -40, opacity: 0 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="absolute inset-x-0 top-0 block"
-              >
-                {roles[roleIndex]}
-              </motion.span>
-            </AnimatePresence>
-          </span>
-          <span className="block">Developer</span>
-        </h1>
-        <p className="mt-5 text-sm md:text-base text-gray-500">
-          Undergraduate Information System Student at UPN "Veteran" Jakarta
-        </p>
-        <div id="contact" className="">
-          <Contact />
-        </div>
-        <div className="inline-flex items-center justify-center bg-gray-200 text-gray-600 font-semibold h-12 px-6 py-2 w-auto rounded-lg hover:bg-gray-300 transform hover:scale-105">
-          <button onClick={handleDownloadCV}>Download CV</button>
-        </div>
-        <div className="inline-flex items-center justify-center text-gray-600 font-semibold mt-4">
-          <Message />
-        </div>
-        <AnimatePresence>
-          {showDownloadNotification && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="fixed top-4 left-1/2 -translate-x-1/2 px-6 py-3 bg-neutral-100 text-gray-500 text-base font-semibold rounded-lg shadow-xl z-50 w-auto md:w-fit max-w-sm text-center"
-            >
-              CV Berhasil diDownload
-            </motion.div>
-          )}
-        </AnimatePresence>
+      {/* CTAs */}
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-0 md:justify-start">
+        <a
+          href="#porto"
+          className="inline-flex min-h-12 items-center gap-2 bg-[var(--ibm-primary)] px-6 py-4 text-sm text-white hover:bg-[var(--ibm-primary-hover)] active:bg-[var(--ibm-primary-active)]"
+          style={{
+            transition: "background-color var(--ibm-dur-fast) var(--ibm-ease)",
+            fontFamily: "var(--ibm-font)",
+          }}
+        >
+          Explore work <IconArrowRight size={16} stroke={1.5} />
+        </a>
+        <a
+          href="/images/fendisCV.pdf"
+          download="CV_FendiPermadi.pdf"
+          className="inline-flex min-h-12 items-center gap-2 border border-[var(--text-primary)] bg-transparent px-6 py-4 text-sm text-[var(--text-primary)] hover:border-[var(--ibm-text-accent)] hover:bg-[var(--surface-muted)] hover:text-[var(--ibm-text-accent)]"
+          style={{
+            transition:
+              "background-color var(--ibm-dur-fast) var(--ibm-ease), border-color var(--ibm-dur-fast) var(--ibm-ease), color var(--ibm-dur-fast) var(--ibm-ease)",
+            fontFamily: "var(--ibm-font)",
+          }}
+        >
+          Download CV <IconDownload size={16} stroke={1.5} />
+        </a>
       </div>
-      <div className="px-10 mt-5 mx-auto md:mb-24 md:mt-0 lg:mt-0">
-        <GlareCard>
-          <img
-            src="../images/profile.jpg"
-            alt="Profile"
-            className="w-full h-full object-cover rounded-xl"
-          />
-        </GlareCard>
+
+      {/* Social / message */}
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-4 md:justify-start">
+        <Contact />
+        <Message />
       </div>
     </div>
-  );
-};
+
+    {/* Image column */}
+    <div className="relative order-1 mx-auto w-full max-w-[420px] md:order-2 md:max-w-none">
+      {/* Profile photo — sharp corners per IBM spec */}
+      <div
+        className="relative overflow-hidden"
+        style={{
+          aspectRatio: "0.9",
+          background: "var(--surface-muted)",
+          border: "1px solid var(--border-subtle)",
+        }}
+      >
+        <img
+          src="/images/profile.jpg"
+          alt="Portrait of Fendi Permadi"
+          className="h-full w-full object-cover"
+        />
+      </div>
+
+    </div>
+  </section>
+);
+
 export default Home;

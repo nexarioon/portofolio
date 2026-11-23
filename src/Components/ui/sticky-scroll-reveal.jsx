@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { useMotionValueEvent, useScroll } from "motion/react";
-import { motion } from "motion/react";
+import { motion as Motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 export const StickyScroll = ({
@@ -49,7 +49,7 @@ export const StickyScroll = ({
   }, [activeCard]);
 
   return (
-    <motion.div
+    <Motion.div
       animate={{
         backgroundColor: backgroundColors[activeCard % backgroundColors.length],
       }}
@@ -59,7 +59,7 @@ export const StickyScroll = ({
         <div className="max-w-2xl">
           {content.map((item, index) => (
             <div key={item.title + index} className="my-20">
-              <motion.h2
+              <Motion.h2
                 initial={{
                   opacity: 0,
                 }}
@@ -68,8 +68,8 @@ export const StickyScroll = ({
                 }}
                 className="text-xl font-bold text-slate-100">
                 {item.title}
-              </motion.h2>
-              <motion.p
+              </Motion.h2>
+              <Motion.p
                 initial={{
                   opacity: 0,
                 }}
@@ -78,18 +78,18 @@ export const StickyScroll = ({
                 }}
                 className="text-kg mt-10 max-w-sm text-slate-300">
                 {item.description}
-              </motion.p>
-              <motion.div // Ui mobile
+              </Motion.p>
+              <Motion.div // Ui mobile
                 initial={{ opacity: 0 }}
                 animate={{ opacity: activeCard === index ? 1 : 0.3 }} 
                 className={cn(
                   "lg:hidden mt-8 w-full flex justify-center",
-                  "h-full w-full bg-white", 
+                  "h-full w-full bg-[var(--surface)]",
                   contentClassName
                 )}
               >
                 {content[activeCard].content ?? null}
-              </motion.div>
+              </Motion.div>
             </div>
           ))}
           <div className="h-40" />
@@ -98,11 +98,11 @@ export const StickyScroll = ({
       <div // Ui Desktop
         style={{ background: backgroundGradient }}
         className={cn(
-          "sticky top-10 hidden h-60 w-80 overflow-hidden rounded-md bg-white lg:block",
+          "sticky top-10 hidden h-60 w-80 overflow-hidden rounded-md bg-[var(--surface)] lg:block",
           contentClassName
         )}>
         {content[activeCard].content ?? null}
       </div>
-    </motion.div>
+    </Motion.div>
   );
 };

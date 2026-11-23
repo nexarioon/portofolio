@@ -3,15 +3,24 @@ import Home from "./Home";
 import About from "./About";
 import Porto from "./Porto";
 import NavbarComponent from "./NavbarComponent";
-const Body = () => {
-    return(
-        <div className="relative w-full font-roboto">
-        <NavbarComponent/>
-        <Home />
-        <About />
-        <Porto />
-        <Footer />
-        </div>
-    );
-}
+
+const Body = () => (
+  <div
+    className="relative w-full"
+    style={{
+      fontFamily: "var(--ibm-font)",
+      background: "var(--page-bg)",
+      color: "var(--text-primary)",
+    }}
+  >
+    <NavbarComponent />
+    <main>
+      <Home />
+      <About />
+      <Porto />
+    </main>
+    <Footer />
+  </div>
+);
+
 export default Body;

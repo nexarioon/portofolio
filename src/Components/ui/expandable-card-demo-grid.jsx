@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useEffect, useId, useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion as Motion } from "motion/react";
 import { useOutsideClick } from "@/hooks/use-outside-click";
+import projects from "@/Components/projectData";
 
 export default function ExpandableCardDemo() {
   const [active, setActive] = useState(null);
@@ -11,17 +12,13 @@ export default function ExpandableCardDemo() {
 
   useEffect(() => {
     function onKeyDown(event) {
-      if (event.key === "Escape") {
-        setActive(false);
-      }
+      if (event.key === "Escape") setActive(null);
     }
-
     if (active && typeof active === "object") {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
-
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [active]);
@@ -30,222 +27,199 @@ export default function ExpandableCardDemo() {
 
   return (
     <>
+      {/* Overlay */}
       <AnimatePresence>
         {active && typeof active === "object" && (
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/20 h-full w-full z-10"
+            transition={{ duration: 0.15 }}
+            className="fixed inset-0 z-[100] h-full w-full"
+            style={{ background: "var(--modal-overlay)" }}
           />
         )}
       </AnimatePresence>
+
+      {/* Expanded modal */}
       <AnimatePresence>
-        {active && typeof active === "object" ? (
-          <div className="fixed inset-0  grid place-items-center z-[100]">
-            <motion.button
+        {active && typeof active === "object" && (
+          <div className="fixed inset-0 z-[101] grid place-items-center p-4">
+            {/* Close button — mobile only */}
+            <Motion.button
               key={`button-${active.title}-${id}`}
               layout
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              exit={{
-                opacity: 0,
-                transition: {
-                  duration: 0.05,
-                },
-              }}
-              className="flex absolute top-2 right-2 lg:hidden items-center justify-center bg-white rounded-full h-6 w-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.05 } }}
+              className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center bg-[var(--modal-bg)] text-[var(--text-primary)] lg:hidden"
+              style={{ border: "1px solid var(--border-subtle)" }}
               onClick={() => setActive(null)}
+              aria-label="Close"
             >
               <CloseIcon />
-            </motion.button>
-            <motion.div
+            </Motion.button>
+
+            {/* Modal card — sharp IBM corners */}
+            <Motion.div
               layoutId={`card-${active.title}-${id}`}
               ref={ref}
-              className="w-full max-w-[500px]  h-full md:h-fit md:max-h-[90%]  flex flex-col bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-hidden"
+              className="flex max-h-[92dvh] w-full max-w-2xl flex-col overflow-hidden bg-[var(--modal-bg)] text-[var(--text-primary)]"
+              style={{
+                border: "1px solid var(--border-subtle)",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.16)",
+                fontFamily: "var(--ibm-font)",
+              }}
             >
-              <motion.div layoutId={`image-${active.title}-${id}`}>
-                <img
-                  width={200}
-                  height={200}
-                  src={active.src}
-                  alt={active.title}
-                  className="w-full h-48 lg:h-56 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
-                />
-              </motion.div>
+              {/* Hero image */}
+              <Motion.div
+                layoutId={`image-${active.title}-${id}`}
+                className="flex h-56 w-full items-center justify-center overflow-hidden bg-[var(--surface-muted)] sm:h-72"
+              >
+                {active.image ? (
+                  <img
+                    src={active.image}
+                    alt={`${active.title} project preview`}
+                    className="h-full w-full object-cover object-top"
+                  />
+                ) : (
+                  <span className="px-4 text-center text-sm text-[var(--text-secondary)]">
+                    Project image coming soon
+                  </span>
+                )}
+              </Motion.div>
 
-              <div>
-                <div className="flex justify-between items-start p-2">
-                  <div className="">
-                    <motion.h3
-                      layoutId={`title-${active.title}-${id}`}
-                      className="font-medium text-neutral-700 dark:text-neutral-200 text-base"
-                    >
-                      {active.title}
-                    </motion.h3>
-                    <motion.p
-                      layoutId={`description-${active.description}-${id}`}
-                      className="text-neutral-600 dark:text-neutral-400 text-base"
-                    >
-                      {active.description}
-                    </motion.p>
-                  </div>
-                </div>
-                <div className="relative px-4">
-                  <motion.div
+              {/* Content */}
+              <div className="p-6">
+                <Motion.h3
+                  layoutId={`title-${active.title}-${id}`}
+                  className="text-[1.375rem] font-semibold leading-[1.2] text-[var(--text-primary)]"
+                  style={{ fontFamily: "var(--ibm-font)" }}
+                >
+                  {active.title}
+                </Motion.h3>
+                <div
+                  className="relative mt-4 max-h-56 overflow-y-auto text-sm leading-[1.5] text-[var(--text-secondary)]"
+                  style={{ fontFamily: "var(--ibm-font)" }}
+                >
+                  <Motion.div
                     layout
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="text-neutral-600 text-xs md:text-sm lg:text-base max-h-60 pb-4 flex flex-col items-start gap-4 overflow-y-auto dark:text-neutral-400"
+                    className="space-y-3"
                   >
-                    {typeof active.content === "function"
-                      ? active.content()
-                      : active.content}
-                  </motion.div>
+                    <p>{active.description}</p>
+                    {active.role && <p><strong>Peran:</strong> {active.role}</p>}
+                    {active.stack && <p><strong>Stack:</strong> {active.stack}</p>}
+                    {active.year && <p><strong>Tahun:</strong> {active.year}</p>}
+                    {active.repo && (
+                      <a
+                        href={active.repo}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 font-semibold"
+                        style={{ color: "var(--ibm-text-accent)", textDecoration: "underline" }}
+                      >
+                        View repository &rarr;
+                      </a>
+                    )}
+                  </Motion.div>
                 </div>
               </div>
-            </motion.div>
+            </Motion.div>
           </div>
-        ) : null}
+        )}
       </AnimatePresence>
-      <ul className="max-w-5xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-4">
-        {cards.map((card, index) => (
-          <motion.div
-            layoutId={`card-${card.title}-${id}`}
-            key={card.title}
-            onClick={() => setActive(card)}
-            className="p-4 flex flex-col bg-gray-100 rounded-xl hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
-          >
-            <div className="flex gap-4 flex-col  w-full">
-              <motion.div layoutId={`image-${card.title}-${id}`}>
-                <img
-                  width={150}
-                  height={150}
-                  src={card.src}
-                  alt={card.title}
-                  className="h-60 w-full  rounded-lg object-cover object-top"
-                />
-              </motion.div>
-              <div className="flex justify-center items-center flex-col">
-                <motion.h3
-                  layoutId={`title-${card.title}-${id}`}
-                  className="font-medium text-neutral-800 dark:text-neutral-200 text-center md:text-left text-base"
-                >
-                  {card.title}
-                </motion.h3>
-                <div className="max-h-20 overflow-y-auto text-neutral-600 dark:text-neutral-400 text-center md:text-left text-base">
-                  <motion.p
-                    layoutId={`description-${card.description}-${id}`}
-                    className="text-neutral-600 dark:text-neutral-400 text-center md:text-left text-base"
+
+      {/* Card grid */}
+      <ul
+        className="mx-auto grid w-full grid-cols-1 gap-px bg-[var(--border-subtle)] sm:grid-cols-2 lg:grid-cols-3"
+        style={{ border: "1px solid var(--border-subtle)" }}
+      >
+        {projects.map((project, index) => (
+          <li key={`${project.title}-${index}`} className={index === 0 ? "sm:col-span-2" : ""}>
+            <Motion.button
+              type="button"
+              layoutId={`card-${project.title}-${id}`}
+              onClick={() => setActive(project)}
+              className="group flex h-full w-full cursor-pointer flex-col bg-[var(--surface)] text-left text-[var(--text-primary)]"
+              style={{
+                transition: "background-color var(--ibm-dur-fast) var(--ibm-ease)",
+                fontFamily: "var(--ibm-font)",
+              }}
+              whileHover={{ backgroundColor: "var(--surface-hover)" }}
+            >
+              <Motion.div
+                layoutId={`image-${project.title}-${id}`}
+                className="flex h-48 w-full items-center justify-center overflow-hidden bg-[var(--surface-muted)]"
+              >
+                {project.image ? (
+                  <img
+                    src={project.image}
+                    alt={`${project.title} project preview`}
+                    className="h-full w-full object-cover object-top"
+                  />
+                ) : (
+                  <span className="px-4 text-center text-sm text-[var(--text-secondary)]">
+                    Project image coming soon
+                  </span>
+                )}
+              </Motion.div>
+
+              <div className="flex flex-1 flex-col justify-between p-6">
+                <div>
+                  <Motion.h3
+                    layoutId={`title-${project.title}-${id}`}
+                    className="text-[1.125rem] font-semibold leading-snug text-[var(--text-primary)]"
+                    style={{ fontFamily: "var(--ibm-font)" }}
                   >
-                    {card.description}
-                  </motion.p>
+                    {project.title}
+                  </Motion.h3>
+                  {project.year && (
+                    <p className="mt-1 text-xs text-[var(--text-secondary)]">{project.year}</p>
+                  )}
+                  <p className="mt-3 text-sm leading-[1.5] text-[var(--text-secondary)]">
+                    {project.description}
+                  </p>
                 </div>
+                <span
+                  className="mt-5 inline-flex items-center gap-1 text-sm font-semibold"
+                  style={{
+                    color: "var(--ibm-text-accent)",
+                    textDecoration: "underline",
+                    fontFamily: "var(--ibm-font)",
+                  }}
+                >
+                  View project details &rarr;
+                </span>
               </div>
-            </div>
-          </motion.div>
+            </Motion.button>
+          </li>
         ))}
       </ul>
     </>
   );
 }
 
-export const CloseIcon = () => {
-  return (
-    <motion.svg
-      initial={{
-        opacity: 0,
-      }}
-      animate={{
-        opacity: 1,
-      }}
-      exit={{
-        opacity: 0,
-        transition: {
-          duration: 0.05,
-        },
-      }}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-4 w-4 text-black"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M18 6l-12 12" />
-      <path d="M6 6l12 12" />
-    </motion.svg>
-  );
-};
-
-const cards = [
-  {
-    title: "Bliss (Predictive Bank Lead Scoring)",
-    src: "../images/porto2.png",
-    ctaLink: "",
-    content: () => {
-      return (
-        <p>
-          Bliss is a sophisticated predictive lead scoring portal designed for
-          the banking industry, engineered with a robust full-stack architecture
-          consisting of Next.js, Express.js, and PostgreSQL. The platform excels
-          by integrating advanced machine learning models to automate the
-          evaluation of customer potential, effectively transforming raw data
-          into actionable insights for more accurate financial decision-making.
-          In addition to its predictive power, the system incorporates secure
-          user authentication and a centralized module for customer data
-          management, providing a seamless and professional environment to
-          optimize modern banking workflows with precision.
-        </p>
-      );
-    },
-  },
-  {
-    title: "UPN Insight",
-    src: "../images/porto3.png",
-    ctaLink: "",
-    content: () => {
-      return (
-        <p>
-          UPNVJ Insight is a comprehensive web-based platform built with
-          React.js, Next.js, and Supabase to centralize information
-          dissemination and improve communication efficiency within the UPN
-          "Veteran" Jakarta community. The application features a dedicated
-          podcast module for informative videos and learning materials, a
-          real-time news channel for university updates, and an interactive
-          discussion hub focusing on internships, scholarships, and academic
-          peer support. By providing a structured and timely environment for
-          data exchange, the platform successfully addresses previous
-          bottlenecks such as announcement delays and fragmented communication,
-          ensuring more effective organizational resource management across the
-          university.
-        </p>
-      );
-    },
-  },
-  {
-    title: "Personal Web Portofolio",
-    src: "../images/porto.png",
-    ctaLink: "https://ui.aceternity.com/templates",
-    content: () => {
-      return (
-        <p>
-          A simple and responsive portfolio website built with React Vite and
-          Tailwind CSS. It highlights my profile as a Front End Developer,
-          featuring a short bio, social media links, and a downloadable CV.
-          Designed with a clean and modern UI to showcase my front-end skills.
-        </p>
-      );
-    },
-  },
-];
+export const CloseIcon = () => (
+  <Motion.svg
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0, transition: { duration: 0.05 } }}
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="text-[var(--text-primary)]"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M18 6l-12 12" />
+    <path d="M6 6l12 12" />
+  </Motion.svg>
+);
