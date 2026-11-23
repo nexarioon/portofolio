@@ -12,6 +12,8 @@ function normalizeField(value, maxLength) {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
 }
 
+export const onRequestGet = () => json({ message: "Method Not Allowed" }, 405);
+
 export async function onRequestPost({ request, env }) {
   const webhookUrl = env.DISCORD_WEBHOOK_URL;
   if (!webhookUrl) {
