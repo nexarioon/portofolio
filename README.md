@@ -10,3 +10,18 @@ Currently, two official plugins are available:
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Deployment
+
+The site is deployed to Cloudflare Pages.
+
+- Production: https://portofolio-14l.pages.dev
+- Deploy from this machine: `npm run deploy` (builds `dist` and uploads it)
+- Local preview with Pages Functions: `npx wrangler pages dev dist`
+
+The contact form posts to the Pages Function at `/api/discord`, which needs the
+`DISCORD_WEBHOOK_URL` secret:
+
+```bash
+npx wrangler pages secret put DISCORD_WEBHOOK_URL --project-name portofolio
+```
