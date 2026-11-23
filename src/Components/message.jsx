@@ -26,7 +26,7 @@ function Message() {
     setError(false);
 
     try {
-      const response = await fetch("/.netlify/functions/discord", {
+      const response = await fetch("/api/discord", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
