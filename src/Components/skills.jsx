@@ -1,28 +1,40 @@
 import { useState } from "react";
-import { FaHtml5, FaCss3Alt, FaReact } from "react-icons/fa";
 import {
-  SiTailwindcss,
+  SiCloudflare,
+  SiDocker,
+  SiFastapi,
+  SiGithubactions,
+  SiGo,
   SiJavascript,
-  SiMysql,
-  SiC,
-  SiVite,
+  SiLinux,
+  SiMongodb,
   SiNextdotjs,
-  SiGit,
+  SiPostgresql,
+  SiPython,
+  SiReact,
+  SiRedis,
+  SiTailwindcss,
+  SiTypescript,
 } from "react-icons/si";
 import Education from "./Education";
 import { Sertif } from "./sertif";
 
 const skills = [
-  { name: "HTML",       icon: <FaHtml5 /> },
-  { name: "CSS",        icon: <FaCss3Alt /> },
-  { name: "Tailwind",   icon: <SiTailwindcss /> },
-  { name: "JavaScript", icon: <SiJavascript /> },
-  { name: "React",      icon: <FaReact /> },
-  { name: "MySQL",      icon: <SiMysql /> },
-  { name: "Next.js",    icon: <SiNextdotjs /> },
-  { name: "C",          icon: <SiC /> },
-  { name: "Vite",       icon: <SiVite /> },
-  { name: "Git",        icon: <SiGit /> },
+  { name: "Python",         icon: <SiPython /> },
+  { name: "FastAPI",        icon: <SiFastapi /> },
+  { name: "Go",             icon: <SiGo /> },
+  { name: "TypeScript",     icon: <SiTypescript /> },
+  { name: "JavaScript",     icon: <SiJavascript /> },
+  { name: "React",          icon: <SiReact /> },
+  { name: "Next.js",        icon: <SiNextdotjs /> },
+  { name: "Tailwind CSS",   icon: <SiTailwindcss /> },
+  { name: "PostgreSQL",     icon: <SiPostgresql /> },
+  { name: "MongoDB",        icon: <SiMongodb /> },
+  { name: "Redis",          icon: <SiRedis /> },
+  { name: "Docker",         icon: <SiDocker /> },
+  { name: "GitHub Actions", icon: <SiGithubactions /> },
+  { name: "Linux",          icon: <SiLinux /> },
+  { name: "Cloudflare",     icon: <SiCloudflare /> },
 ];
 
 const tabs = [

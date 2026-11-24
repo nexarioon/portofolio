@@ -32,8 +32,9 @@ const Home = () => (
         className="mt-4 text-base leading-relaxed text-[var(--text-secondary)] md:max-w-lg"
         style={{ fontFamily: "var(--ibm-font)" }}
       >
-        Information Systems student &amp; web developer. Focused on clear,
-        responsive experiences that help people get things done.
+        Software engineer focused on Python, Go, and TypeScript. I build
+        production backends, clean data models, and responsive interfaces that
+        help people get things done.
       </p>
 
       {/* CTAs */}

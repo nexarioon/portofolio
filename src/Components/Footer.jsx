@@ -23,7 +23,8 @@ const Footer = () => (
             className="mt-2 max-w-xs text-sm leading-[1.5]"
             style={{ color: "var(--text-secondary)" }}
           >
-            Information Systems student &amp; web developer based in Jakarta.
+            Software engineer based in Jakarta, building production systems
+            end-to-end.
           </p>
         </div>
 

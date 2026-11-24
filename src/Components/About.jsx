@@ -24,9 +24,9 @@ const About = () => (
           style={{ fontFamily: "var(--ibm-font)" }}
         >
           I&apos;m studying Information Systems at UPN Veteran Jakarta, where I
-          bring together frontend development and an understanding of how
-          organizations work. I enjoy turning complex needs into simple,
-          responsive experiences that help people get things done.
+          build production systems end-to-end — Python and Go backends, clean
+          PostgreSQL data models, and React interfaces. I enjoy turning complex
+          needs into reliable, simple systems that help people get things done.
         </p>
 
         {/* Skills / Education / Certificates */}
