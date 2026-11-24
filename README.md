@@ -15,7 +15,7 @@ If you are developing a production application, we recommend using TypeScript an
 
 The site is deployed to Cloudflare Pages.
 
-- Production: https://portofolio-14l.pages.dev
+- Production: https://fendip.my.id (fallback: https://portofolio-14l.pages.dev)
 - Deploy from this machine: `npm run deploy` (builds `dist` and uploads it)
 - Local preview with Pages Functions: `npx wrangler pages dev dist`
 
