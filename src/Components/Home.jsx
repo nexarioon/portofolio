@@ -50,7 +50,7 @@ const Home = () => (
         </a>
         <a
           href="/images/fendisCV.pdf"
-          download="CV_FendiPermadi.pdf"
+          download="CV_Fendi_Permadi.pdf"
           className="inline-flex min-h-12 items-center gap-2 border border-[var(--text-primary)] bg-transparent px-6 py-4 text-sm text-[var(--text-primary)] hover:border-[var(--ibm-text-accent)] hover:bg-[var(--surface-muted)] hover:text-[var(--ibm-text-accent)]"
           style={{
             transition:
